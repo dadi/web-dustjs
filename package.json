@@ -1,5 +1,5 @@
 {
-  "name": "web-dustjs",
+  "name": "@dadi/web-dustjs",
   "version": "1.0.0",
   "description": "A Dust.js interface for DADI Web",
   "main": "index.js",
@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/dadi/web-dustjs/issues"
   },
-  "homepage": "https://github.com/dadi/web-dustjs#readme"
+  "homepage": "https://github.com/dadi/web-dustjs#readme",
+  "dependencies": {
+    "dustjs-linkedin": "^2.7.5"
+  }
 }
