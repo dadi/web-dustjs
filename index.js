@@ -6,11 +6,10 @@ const ENGINE = {
 module.exports = () => {
   const fs = require('fs')
   const path = require('path')
-
+  
   const debug = require('debug')('web:templates:dust')
+  const dust = require('dustjs-linkedin')
   const wildcard = require('wildcard')
-
-  let dust
 
   const EngineDust = function (options) {
     debug('Starting Dust.js engine...')
@@ -20,8 +19,6 @@ module.exports = () => {
     this.helpers = options.helpers
     this.pagesPath = options.pagesPath
     this.templates = options.templates
-
-    dust = options.module ? options.module : require('dustjs-linkedin')
   }
 
   /**
