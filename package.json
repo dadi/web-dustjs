@@ -1,0 +1,24 @@
+{
+  "name": "web-dustjs",
+  "version": "1.0.0",
+  "description": "A Dust.js interface for DADI Web",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dadi/web-dustjs.git"
+  },
+  "keywords": [
+    "dadi",
+    "web",
+    "dust.js",
+    "linkedin"
+  ],
+  "author": "Eduardo Boucas <mail@eduardoboucas.com>",
+  "bugs": {
+    "url": "https://github.com/dadi/web-dustjs/issues"
+  },
+  "homepage": "https://github.com/dadi/web-dustjs#readme"
+}
