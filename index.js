@@ -9,6 +9,7 @@ module.exports = () => {
   
   const debug = require('debug')('web:templates:dust')
   const dust = require('dustjs-linkedin')
+  const helpers = require(path.join(__dirname, 'lib/helpers'))
   const wildcard = require('wildcard')
 
   const EngineDust = function (options) {
@@ -16,18 +17,17 @@ module.exports = () => {
 
     this.additionalTemplates = options.additionalTemplates
     this.config = options.config
-    this.helpers = options.helpers
     this.pagesPath = options.pagesPath
     this.templates = options.templates
   }
 
   /**
-    * Loads Dust partials from all directories in `this.partialsDirectories`.
+    * Loads any additional templates.
     *
     * @return {Promise} The names of the partials loaded.
     */
   EngineDust.prototype._loadPartials = function () {
-    return this.helpers.readFiles(this.additionalTemplates, {
+    return helpers.readFiles(this.additionalTemplates, {
       callback: file => {
         return new Promise((resolve, reject) => {
           fs.readFile(file, 'utf8', (err, data) => {
@@ -52,7 +52,7 @@ module.exports = () => {
     * @param {string} directory The full path to the directory.
     */
   EngineDust.prototype._requireDirectory = function (directory) {
-    return this.helpers
+    return helpers
       .readDirectory(directory, {
         extensions: ['.js'],
         recursive: true
@@ -208,7 +208,7 @@ module.exports = () => {
       })
 
       queue.push(
-        this.helpers
+        helpers
           .writeToFile(templatesOutputFile, templatesOutput)
           .then(() => templates)
       )
@@ -222,7 +222,7 @@ module.exports = () => {
           ) + '.js'
 
         queue.push(
-          this.helpers
+          helpers
             .writeToFile(templatesOutputFile, dust.cache[name])
             .then(() => name)
         )
@@ -237,5 +237,4 @@ module.exports = () => {
   return EngineDust
 }
 
-module.exports.extensions = ENGINE.extensions
-module.exports.handle = ENGINE.handle
+module.exports.metadata = ENGINE
