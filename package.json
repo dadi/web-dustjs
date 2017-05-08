@@ -4,7 +4,9 @@
   "description": "A Dust.js interface for DADI Web",
   "main": "index.js",
   "scripts": {
-    "test": ""
+    "test": "snazzy 'lib/**/*.js' && env NODE_ENV=test ./node_modules/.bin/istanbul cover --report cobertura --report text --report html --report lcov ./node_modules/mocha/bin/_mocha test",
+    "atest": "./node_modules/mocha/bin/_mocha test",
+    "posttest": "./scripts/coverage.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,23 @@
   },
   "homepage": "https://github.com/dadi/web-dustjs#readme",
   "dependencies": {
-    "dustjs-linkedin": "^2.7.5"
+    "@dadi/logger": "^1.2.0",
+    "debug": "^2.6.6",
+    "dustjs-linkedin": "^2.7.5",
+    "mkdirp": "^0.5.1",
+    "wildcard": "^1.1.2"
+  },
+  "devDependencies": {
+    "colors": "^1.1.2",
+    "env-test": "^1.0.0",
+    "html-looks-like": "^1.0.2",
+    "istanbul": "^1.1.0-alpha.1",
+    "istanbul-cobertura-badger": "^1.1.0",
+    "mocha": "~3.2.0",
+    "semantic-release": "^6.3.2",
+    "should": "~4.0.4",
+    "sinon": "~1.17.6",
+    "snazzy": "^6.0.0",
+    "standard": "*"
   }
 }

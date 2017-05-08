@@ -1,0 +1,11 @@
+{>"partials/header"/}
+
+<h1>Products:</h1>
+
+<ul>
+  {#products}
+    <li>{name} - £{price}</li>
+  {/products}
+</ul>
+
+{>"partials/footer"/}

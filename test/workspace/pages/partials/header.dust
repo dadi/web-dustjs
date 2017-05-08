@@ -1,0 +1,1 @@
+<header>My online store</header>
