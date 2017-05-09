@@ -1,3 +1,5 @@
+'use strict'
+
 const ENGINE = {
   config: {
     cache: {
