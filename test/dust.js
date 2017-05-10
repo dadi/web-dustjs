@@ -1,38 +1,20 @@
 const fs = require('fs')
 const htmlLooksLike = require('html-looks-like')
+const objectPath = require('object-path')
 const path = require('path')
 const should = require('should')
-const helpers = require(path.join(__dirname, '/helpers'))
+const helpers = require(path.join(__dirname, '/helpers/index'))
 
-const config = helpers.mockConfig({
-  'dust.paths': {
-    filters: 'test/workspace/filters',
-    helpers: 'test/workspace/helpers'
-  }
-})
-
+let config = require(path.join(__dirname, '/helpers/config'))
 let engine
 let factory
-let productsTemplate
-
-const PATHS = {
-  engine: path.join(__dirname, '/../index'),
-  workspace: path.join(__dirname, '/workspace')
-}
-
-const ADDITIONAL_TEMPLATES = {
-  'partials/footer': path.join(PATHS.workspace, 'pages/partials/footer.dust'),
-  'partials/header': path.join(PATHS.workspace, 'pages/partials/header.dust')
-}
-
-const PAGES = {
-  products: fs.readFileSync(path.join(PATHS.workspace, 'pages/products.dust'), 'utf8')
-}
 
 describe('Dust.js interface', function () {
   // Get a fresh instance of the engine
   beforeEach(done => {
-    factory = require(PATHS.engine)
+    config.reset()
+
+    factory = require(helpers.paths.engine)
 
     engine = {
       extensions: factory.metadata.extensions,
@@ -46,7 +28,7 @@ describe('Dust.js interface', function () {
 
   // Get rid of the current instance of the engine
   afterEach(done => {
-    delete require.cache[PATHS.engine]
+    delete require.cache[helpers.paths.engine]
 
     done()
   })
@@ -68,17 +50,17 @@ describe('Dust.js interface', function () {
   it('should load filters, helpers and partials', done => {
     const Engine = factory()
     const instance = new Engine({
-      additionalTemplates: Object.keys(ADDITIONAL_TEMPLATES).map(name => ADDITIONAL_TEMPLATES[name]),
+      additionalTemplates: Object.keys(helpers.additionalTemplates).map(name => helpers.additionalTemplates[name]),
       config: config,
-      pagesPath: path.join(PATHS.workspace, 'pages')
+      pagesPath: path.join(helpers.paths.workspace, 'pages')
     })
 
     instance.initialise().then(() => {
       const core = instance.getCore()
 
-      core.filters.foo.should.be.Function
+      core.filters.up.should.be.Function
 
-      Object.keys(ADDITIONAL_TEMPLATES).forEach(name => {
+      Object.keys(helpers.additionalTemplates).forEach(name => {
         const type = typeof core.cache[name]
 
         type.should.eql('function')
@@ -91,13 +73,13 @@ describe('Dust.js interface', function () {
   it('should load pages', done => {
     const Engine = factory()
     const instance = new Engine({
-      additionalTemplates: Object.keys(ADDITIONAL_TEMPLATES).map(name => ADDITIONAL_TEMPLATES[name]),
+      additionalTemplates: Object.keys(helpers.additionalTemplates).map(name => helpers.additionalTemplates[name]),
       config: config,
-      pagesPath: path.join(PATHS.workspace, 'pages')
+      pagesPath: path.join(helpers.paths.workspace, 'pages')
     })
 
     instance.initialise().then(() => {
-      return instance.register('products', PAGES.products)
+      return instance.register('products', helpers.pages.products)
     }).then(() => {
       const core = instance.getCore()
       const type = typeof core.cache.products
@@ -111,9 +93,9 @@ describe('Dust.js interface', function () {
   it('should render pages with locals', done => {
     const Engine = factory()
     const instance = new Engine({
-      additionalTemplates: Object.keys(ADDITIONAL_TEMPLATES).map(name => ADDITIONAL_TEMPLATES[name]),
+      additionalTemplates: Object.keys(helpers.additionalTemplates).map(name => helpers.additionalTemplates[name]),
       config: config,
-      pagesPath: path.join(PATHS.workspace, 'pages')
+      pagesPath: path.join(helpers.paths.workspace, 'pages')
     })
 
     const locals = {
@@ -144,13 +126,111 @@ describe('Dust.js interface', function () {
     `
 
     instance.initialise().then(() => {
-      return instance.register('products', PAGES.products)
+      return instance.register('products', helpers.pages.products)
     }).then(() => {
-      return instance.render('products', PAGES.products, locals)
+      return instance.render('products', helpers.pages.products, locals)
     }).then(output => {
       htmlLooksLike(output, expected)
 
       done()
-    }).catch(e => console.log(e))
+    })
+  })
+
+  it('should throw an error if the configured helper path cannot be found', done => {
+    config.set('engines.dust.paths.helpers', '/some/directory/that/does/not/exist')
+
+    const Engine = factory()
+    const instance = new Engine({
+      additionalTemplates: Object.keys(helpers.additionalTemplates).map(name => helpers.additionalTemplates[name]),
+      config: config,
+      pagesPath: path.join(helpers.paths.workspace, 'pages')
+    })
+
+    instance.initialise().catch(err => {
+      err.code.should.eql('ENOENT')
+
+      done()
+    })
+  })
+
+  it('should have access to custom dust helpers', done => {
+    const Engine = factory()
+    const instance = new Engine({
+      additionalTemplates: [],
+      config: config,
+      pagesPath: path.join(helpers.paths.workspace, 'pages')
+    })
+
+    const pageContent = '<p>{@Trim data="   space jam        "/}</p>'
+    const expected = '<p>space jam</p>'
+
+    instance.initialise().then(() => {
+      return instance.register('testHelpers', pageContent)
+    }).then(() => {
+      return instance.render('testHelpers', pageContent, {})
+    }).then(output => {
+      htmlLooksLike(output, expected)
+
+      done()
+    })
+  })
+
+  it('should have access to custom dust filters', done => {
+    const Engine = factory()
+    const instance = new Engine({
+      additionalTemplates: [],
+      config: config,
+      pagesPath: path.join(helpers.paths.workspace, 'pages')
+    })
+
+    const locals = {
+      text: 'up in the air'
+    }
+
+    const pageContent = '<p>{text|up}</p>'
+
+    const expected = '<p>UP IN THE AIR</p>'
+
+    instance.initialise().then(() => {
+      return instance.register('testFilters', pageContent)
+    }).then(() => {
+      return instance.render('testFilters', pageContent, locals)
+    }).then(output => {
+      htmlLooksLike(output, expected)
+
+      done()
+    })
+  })
+
+  it('should still render if custom dust helper cannot be found', done => {
+    const Engine = factory()
+    const instance = new Engine({
+      additionalTemplates: [],
+      config: config,
+      pagesPath: path.join(helpers.paths.workspace, 'pages')
+    })
+
+    const pageContent = `
+      <header>Hello!</header>
+
+      {@something}this will be skipped{/something}
+
+      <footer>Bye.</footer>
+    `
+    const expected = `
+      <header>Hello!</header>
+
+      <footer>Bye.</footer>
+    `
+
+    instance.initialise().then(() => {
+      return instance.register('testMissingHelper', pageContent)
+    }).then(() => {
+      return instance.render('testMissingHelper', pageContent, {})
+    }).then(output => {
+      htmlLooksLike(output, expected)
+
+      done()
+    })
   })
 })
