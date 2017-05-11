@@ -136,23 +136,6 @@ describe('Dust.js interface', function () {
     })
   })
 
-  it('should throw an error if the configured helper path cannot be found', done => {
-    config.set('engines.dust.paths.helpers', '/some/directory/that/does/not/exist')
-
-    const Engine = factory()
-    const instance = new Engine({
-      additionalTemplates: Object.keys(helpers.additionalTemplates).map(name => helpers.additionalTemplates[name]),
-      config: config,
-      pagesPath: path.join(helpers.paths.workspace, 'pages')
-    })
-
-    instance.initialise().catch(err => {
-      err.code.should.eql('ENOENT')
-
-      done()
-    })
-  })
-
   it('should have access to custom dust helpers', done => {
     const Engine = factory()
     const instance = new Engine({

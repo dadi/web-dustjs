@@ -109,7 +109,6 @@ module.exports = () => {
     return helpers
       .readDirectory(directory, {
         extensions: ['.js'],
-        failIfNotFound: true,
         recursive: true
       })
       .then(files => {
