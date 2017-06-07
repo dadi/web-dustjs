@@ -1,3 +1,5 @@
+'use strict'
+
 const objectPath = require('object-path')
 
 const CONFIG_PROPERTIES = {
