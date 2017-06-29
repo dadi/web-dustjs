@@ -66,6 +66,8 @@ module.exports = () => {
   const helpers = require(path.join(__dirname, 'lib/helpers'))
   const wildcard = require('wildcard')
 
+  require('dustjs-helpers')
+
   const EngineDust = function (options) {
     debug('Starting Dust.js engine...')
 
