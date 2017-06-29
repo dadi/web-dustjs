@@ -30,75 +30,85 @@ This module allows [Dust.js](http://www.dustjs.com/) templates to be used with [
 
 The following configuration parameters can be added to the global Web config file, under `engines.dust`.
 
->### `cache`
->
->If `true`, compiled templates are saved to the Dust cache (recommended).
->
->- Format: `Boolean`
->- Default: `true`
+### `cache`
 
->### `debug`
->
->Dust.js debug mode enabled.
->
->- Format: `Boolean`
->- Default: `false`
+If `true`, compiled templates are saved to the Dust cache (recommended).
 
->### `debugLevel`
->
->The debug level to use. Should be one of `DEBUG`, `INFO`, `WARN` or `ERROR`.
->
->- Format: `String`
->- Default: 'WARN'
+- Format: `Boolean`
+- Default: `true`
 
->## `whitespace`
->
->Minify the HTML output.
->
->- Format: `Boolean`
->- Default: `false`
+---
 
->## `clientRender`
->
->>### `enabled`
->>
->>If `true`, compiled templates are made available to the client-side.
->>
->>- Format: `Boolean`
->>- Default: `false`
->
->>### `format`
->>
->>Defines whether compiled templates are written to individual JS files ('separate') or combined into a single one ('combined').
->>
->>- Format: ['separate', 'combined']
->>- Default: 'separate'
->
->>### `path`
->>
->>The location where compiled templates should be written to, relative to 'public'. This should be a folder when 'format' is >>'separate' and a file when 'combined'.
->>
->>- Format: `String`
->>- Default: `'templates'`
->
->>### `whitelist`
->>
->>When defined, only templates with names matching an entry in whitelist will be made available to the client. Wildcards s>upported.
->>
->>- Format: `Array`
->>- Default: `[]`
+### `debug`
 
->## `paths`
->
->Paths required by Dust.
->
->- Format: `Object`
->- Default:
->    ```
->    {
->      {
->        filters: 'workspace/utils/filters',
->        helpers: 'workspace/utils/helpers'
->      }
->    }
->    ```
+Dust.js debug mode enabled.
+
+- Format: `Boolean`
+- Default: `false`
+
+---
+
+### `debugLevel`
+
+The debug level to use. Should be one of `DEBUG`, `INFO`, `WARN` or `ERROR`.
+
+- Format: `String`
+- Default: 'WARN'
+
+---
+
+## `whitespace`
+
+Minify the HTML output.
+
+- Format: `Boolean`
+- Default: `false`
+
+---
+
+## `clientRender`
+      
+#### `enabled`
+        
+If `true`, compiled templates are made available to the client-side.
+
+- Format: `Boolean`
+- Default: `false`
+
+#### `format`
+
+Defines whether compiled templates are written to individual JS files ('separate') or combined into a single one ('combined').
+
+- Format: ['separate', 'combined']
+- Default: 'separate'
+
+#### `path`
+
+The location where compiled templates should be written to, relative to 'public'. This should be a folder when 'format' is 'separate' and a file when 'combined'.
+
+- Format: `String`
+- Default: `'templates'`
+
+#### `whitelist`
+
+When defined, only templates with names matching an entry in whitelist will be made available to the client. Wildcards supported.
+
+- Format: `Array`
+- Default: `[]`
+
+---
+
+## `paths`
+
+Paths required by Dust.
+
+- Format: `Object`
+- Default:
+    ```
+    {
+      {
+        filters: 'workspace/utils/filters',
+        helpers: 'workspace/utils/helpers'
+      }
+    }
+    ```
