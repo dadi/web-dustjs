@@ -27,6 +27,7 @@
   "dependencies": {
     "@dadi/logger": "^1.2.0",
     "debug": "^2.6.6",
+    "dustjs-helpers": "^1.7.3",
     "dustjs-linkedin": "^2.7.5",
     "mkdirp": "^0.5.1",
     "wildcard": "^1.1.2"
