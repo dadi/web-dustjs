@@ -1,4 +1,6 @@
-# DADI Web + Dust.js
+<img src="https://dadi.tech/assets/products/dadi-web-full.png" alt="DADI Web" height="65"/>
+
+## Dust.js engine interface
 
 [![npm (scoped)](https://img.shields.io/npm/v/@dadi/web-dustjs.svg?maxAge=10800&style=flat-square)](https://www.npmjs.com/package/@dadi/web-dustjs)
 [![coverage](https://img.shields.io/badge/coverage-57%25-red.svg?style=flat?style=flat-square)](https://github.com/dadi/web-dustjs)
