@@ -127,7 +127,7 @@ var dust = require('dustjs-linkedin')
 
 // Load common-dustjs-helpers
 var commonDustHelpers = require('common-dustjs-helpers')
-new commonDustHelpers.CommonDustjsHelpers().export_helpers_to(dust.getEngine())
+new commonDustHelpers.CommonDustjsHelpers().export_helpers_to(dust)
 
 // Load the DADI helper pack
 require('@dadi/dustjs-helpers')(dust.getEngine(), { components: components })
