@@ -100,7 +100,7 @@ When defined, only templates with names matching an entry in whitelist will be m
 
 ---
 
-## `paths`
+### `paths`
 
 Paths required by Dust.
 
@@ -114,3 +114,21 @@ Paths required by Dust.
       }
     }
     ```
+
+## Helpers
+
+This module automatically includes the official set of [helpers by LinkedIn](https://github.com/linkedin/dustjs-helpers). Other helper modules will need to be required manually, using a loader file placed in the helpers directory defined in config (e.g. `workspace/utils/helpers/loader.js`)
+
+*Example:*
+
+```js
+var components = require('@dadi/web').Components
+var dust = require('dustjs-linkedin')
+
+// Load common-dustjs-helpers
+var commonDustHelpers = require('common-dustjs-helpers')
+new commonDustHelpers.CommonDustjsHelpers().export_helpers_to(dust)
+
+// Load the DADI helper pack
+require('@dadi/dustjs-helpers')(dust, { components: components })
+```
