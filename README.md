@@ -123,7 +123,7 @@ This module automatically includes the official set of [helpers by LinkedIn](htt
 
 ```js
 var components = require('@dadi/web').Components
-var dust = require('@dadi/web').Dust
+var dust = require('dustjs-linkedin')
 
 // Load common-dustjs-helpers
 var commonDustHelpers = require('common-dustjs-helpers')
