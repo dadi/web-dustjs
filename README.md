@@ -130,5 +130,5 @@ var commonDustHelpers = require('common-dustjs-helpers')
 new commonDustHelpers.CommonDustjsHelpers().export_helpers_to(dust)
 
 // Load the DADI helper pack
-require('@dadi/dustjs-helpers')(dust.getEngine(), { components: components })
+require('@dadi/dustjs-helpers')(dust, { components: components })
 ```
