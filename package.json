@@ -1,6 +1,6 @@
 {
   "name": "@dadi/web-dustjs",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "A Dust.js interface for DADI Web",
   "main": "index.js",
   "scripts": {
