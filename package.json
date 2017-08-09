@@ -17,7 +17,8 @@
     "dadi",
     "web",
     "dust.js",
-    "linkedin"
+    "linkedin",
+    "dadi-web-engine"
   ],
   "author": "Eduardo Boucas <mail@eduardoboucas.com>",
   "bugs": {
