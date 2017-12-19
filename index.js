@@ -72,6 +72,7 @@ module.exports = () => {
     debug('Starting Dust.js engine...')
 
     this.additionalTemplates = options.additionalTemplates
+    this.compiledTemplates = {}
     this.config = options.config
     this.pagesPath = options.pagesPath
     this.templates = options.templates
@@ -193,6 +194,8 @@ module.exports = () => {
 
     const compiledData = dust.compile(data, name)
 
+    this.compiledTemplates[name] = compiledData
+
     dust.loadSource(compiledData)
 
     return true
@@ -260,7 +263,7 @@ module.exports = () => {
       let templatesOutput = ''
 
       templates.forEach(name => {
-        templatesOutput += dust.cache[name]
+        templatesOutput += this.compiledTemplates[name]
       })
 
       queue.push(
