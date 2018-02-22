@@ -18,9 +18,9 @@ const ENGINE = {
       default: 'WARN'
     },
     whitespace: {
-      doc: 'Minify the HTML output',
+      doc: 'Preserve whitespace in the output.',
       format: Boolean,
-      default: false
+      default: true
     },
     clientRender: {
       enabled: {

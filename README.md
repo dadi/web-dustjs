@@ -61,10 +61,10 @@ The debug level to use. Should be one of `DEBUG`, `INFO`, `WARN` or `ERROR`.
 
 ## `whitespace`
 
-Minify the HTML output.
+Preserve whitespace in the HTML output.
 
 - Format: `Boolean`
-- Default: `false`
+- Default: `true`
 
 ---
 
