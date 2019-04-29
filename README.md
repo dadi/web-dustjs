@@ -1,4 +1,4 @@
-<img src="https://dadi.tech/assets/products/dadi-web-full.png" alt="DADI Web" height="65"/>
+<img src="https://dadi.cloud/assets/products/dadi-web-full.png" alt="DADI Web" height="65"/>
 
 ## Dust.js engine interface
 
